@@ -1,7 +1,9 @@
 ---
 title: Bathroom Remodeling Houston
+seoTitle: Bathroom Remodeling Houston - Custom Showers | OilerBilt
 slug: bathroom-remodeling-houston
 description: Houston bathroom remodeling with showers, tile, vanities, drywall, moisture-conscious materials and coordinated finish work.
+seoDescription: Plan a Houston bathroom remodel with showers, tile, vanities and moisture-conscious rebuilding. Request your free OilerBilt project estimate today.
 eyebrow: Bathroom remodeling + tile
 included: ["Shower and tub-area remodeling", "Wall and floor tile", "Vanity and countertop installation", "Drywall and moisture-resistant board", "Paint and trim", "Fixture and trade coordination", "Demolition and debris handling", "Final seal and finish review"]
 cost: ["Keeping or changing plumbing locations", "Shower size and waterproofing details", "Tile size, pattern and preparation", "Condition behind existing walls", "Vanity, glass and fixture selections", "Ventilation and electrical changes"]

@@ -1,7 +1,9 @@
 ---
 title: Stone Walkways & Hardscaping Houston
+seoTitle: Stone Walkways & Hardscaping Houston TX | OilerBilt
 slug: stone-walkways-hardscaping-houston
 description: Stone walkways, garden borders and focused exterior upgrades for Houston-area homes and landscapes.
+seoDescription: Build a Houston stone walkway with thoughtful grading, drainage, base preparation and clean transitions. Request your free OilerBilt estimate today.
 eyebrow: Walkways + landscape upgrades
 included: ["Stone walkway installation", "Garden and planting-bed borders", "Small exterior landscape upgrades", "Layout and material planning", "Existing-area preparation", "Base and drainage consideration", "Edge and transition detailing", "Final cleanup"]
 cost: ["Walkway length, width and pattern", "Stone type, thickness and availability", "Excavation and existing surface removal", "Base preparation and drainage", "Curves, steps and edge details", "Site access and material movement"]

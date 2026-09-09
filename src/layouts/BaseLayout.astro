@@ -7,9 +7,48 @@ interface Props {
   title: string;
   description: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  breadcrumbLabel?: string;
+  breadcrumbParent?: { name: string; url: string };
 }
-const { title, description, schema } = Astro.props;
+const {
+  title: suppliedTitle,
+  description: suppliedDescription,
+  schema,
+  noindex: suppliedNoindex,
+  breadcrumbLabel,
+  breadcrumbParent,
+} = Astro.props;
+const staticSeo: Record<string, { title: string; description: string }> = {
+  "/about/": {
+    title: "Houston Remodeling Company TX - About Us | OilerBilt",
+    description: "Learn how OilerBilt approaches residential and commercial remodeling across Houston with clear scopes and practical planning. Meet our company today.",
+  },
+  "/contact/": {
+    title: "Houston Remodeling Contractor Contact TX | OilerBilt",
+    description: "Contact OilerBilt for Houston remodeling, drywall, painting, bathrooms and exterior upgrades. Call or request your free project estimate today.",
+  },
+  "/free-estimate/": {
+    title: "Free Houston Remodeling Estimate - Start | OilerBilt",
+    description: "Request a free Houston remodeling estimate for drywall, kitchens, bathrooms, painting or exterior work. Share your project details to get started.",
+  },
+  "/service-areas/": {
+    title: "Houston Area Remodeling Services & Repairs | OilerBilt",
+    description: "Find OilerBilt remodeling services across Houston, Alief, Mission Bend, Sugar Land, Katy and Missouri City. Check your local service area today.",
+  },
+  "/thank-you/": {
+    title: "Houston Remodeling Estimate Request Received | OilerBilt",
+    description: "Your Houston remodeling estimate request was received by OilerBilt. We will review your project details and follow up using your contact information.",
+  },
+};
+const pageSeo = staticSeo[Astro.url.pathname];
+const title = pageSeo?.title ?? suppliedTitle;
+const description = pageSeo?.description ?? suppliedDescription;
+const noindex = suppliedNoindex ?? Astro.url.pathname === "/thank-you/";
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const siteUrl = new URL("/", Astro.site ?? Astro.url.origin).href;
+const imageUrl = new URL("/og.png", siteUrl).href;
+const logoUrl = new URL("/favicon.svg", siteUrl).href;
 const nav = [
   ["Services", "/#services"],
   ["Gallery", "/gallery/"],
@@ -20,46 +59,127 @@ const nav = [
 const phone = "(469) 249-2563";
 const phoneHref = "tel:+14692492563";
 const email = "oilerbilt@gmail.com";
+const providedSchema = schema
+  ? (Array.isArray(schema) ? schema : [schema]).flatMap((item: any) =>
+      item["@graph"] ?? [item],
+    )
+  : [];
+const pathLabels: Record<string, string> = {
+  about: "About",
+  contact: "Contact",
+  "free-estimate": "Free Estimate",
+  gallery: "Project Gallery",
+  "service-areas": "Service Areas",
+  "thank-you": "Request Received",
+};
+const segments = Astro.url.pathname.split("/").filter(Boolean);
+const breadcrumbItems = segments.length
+  ? [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      ...(breadcrumbParent
+        ? [{
+            "@type": "ListItem",
+            position: 2,
+            name: breadcrumbParent.name,
+            item: new URL(breadcrumbParent.url, siteUrl).href,
+          }]
+        : segments.length > 1
+          ? [{
+              "@type": "ListItem",
+              position: 2,
+              name: pathLabels[segments[0]] ?? segments[0],
+              item: new URL(`/${segments[0]}/`, siteUrl).href,
+            }]
+          : []),
+      {
+        "@type": "ListItem",
+        position: breadcrumbParent || segments.length > 1 ? 3 : 2,
+        name: breadcrumbLabel ?? pathLabels[segments.at(-1) ?? ""] ?? title.split(" |")[0],
+        item: canonical.href,
+      },
+    ]
+  : [];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      name: "OilerBilt Home Remodeling",
+      url: siteUrl,
+      inLanguage: "en-US",
+      publisher: { "@id": `${siteUrl}#organization` },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonical.href}#webpage`,
+      name: title,
+      description,
+      url: canonical.href,
+      isPartOf: { "@id": `${siteUrl}#website` },
+      about: { "@id": `${siteUrl}#organization` },
+      inLanguage: "en-US",
+    },
+    {
+      "@type": ["Organization", "GeneralContractor"],
+      "@id": `${siteUrl}#organization`,
+      name: "OilerBilt Home Remodeling",
+      url: siteUrl,
+      logo: logoUrl,
+      image: imageUrl,
+      telephone: phone,
+      email,
+      areaServed: ["Houston", "Alief", "Mission Bend", "Sugar Land", "Katy", "Missouri City"],
+      sameAs: ["https://www.instagram.com/oilerbilt/"],
+    },
+    ...(breadcrumbItems.length
+      ? [{ "@type": "BreadcrumbList", itemListElement: breadcrumbItems }]
+      : []),
+    ...providedSchema,
+  ],
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
     <meta
       name="google-site-verification"
       content="E_mpaqjIFXg3l3oVSdn113O_NEOOmCF6XFEzrY5Mo9o"
     />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OilerBilt Home Remodeling" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta
       property="og:image"
-      content={new URL("/og.png", Astro.site ?? Astro.url.origin)}
+      content={imageUrl}
     />
     <meta
       property="og:image:alt"
       content="OilerBilt Home Remodeling — Houston and southwest Harris County"
     />
+    <meta property="og:image:width" content="1734" />
+    <meta property="og:image:height" content="907" />
+    <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta
       name="twitter:image"
-      content={new URL("/og.png", Astro.site ?? Astro.url.origin)}
+      content={imageUrl}
     />
-    {schema && (
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify(schema)}
-      ></script>
-    )}
+    <meta name="twitter:image:alt" content="OilerBilt Home Remodeling in Houston" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   </head>
   <body>
     <a class="skip-link" href="#main">

@@ -1,7 +1,9 @@
 ---
 title: Kitchen Remodeling Houston
+seoTitle: Kitchen Remodeling Houston - Custom Updates | OilerBilt
 slug: kitchen-remodeling-houston
 description: Houston kitchen remodeling focused on practical layouts, cabinets, surfaces, tile, drywall, painting and coordinated finish work.
+seoDescription: Plan a Houston kitchen remodel with practical layouts, cabinets, surfaces, tile and finish work. Request your free OilerBilt project estimate today.
 eyebrow: Kitchen remodeling
 included: ["Existing-kitchen evaluation and scope planning", "Cabinet removal and installation", "Countertop and backsplash coordination", "Drywall, texture and paint", "Floor and wall tile", "Lighting and trade coordination", "Trim and finish carpentry", "Final punch-list walkthrough"]
 cost: ["Keeping or changing the existing layout", "Cabinet type and storage details", "Countertop and backsplash materials", "Condition behind removed cabinets", "Plumbing and electrical changes", "Flooring transitions and finish scope"]

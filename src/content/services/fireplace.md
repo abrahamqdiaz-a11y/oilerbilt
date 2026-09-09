@@ -1,7 +1,9 @@
 ---
 title: Custom Fireplace Walls Houston
+seoTitle: Custom Fireplace Walls Houston - Built-Ins | OilerBilt
 slug: custom-fireplace-walls-houston
 description: Custom fireplace and accent walls for Houston living rooms, with built-ins, surface finishes, trim and coordinated painting.
+seoDescription: Create a custom fireplace wall in Houston with built-ins, finish upgrades and a layout designed for your room. Request an OilerBilt estimate today.
 eyebrow: Custom focal walls
 included: ["Fireplace feature-wall planning", "Accent wall framing and surface preparation", "Built-in shelving and display niches", "Tile, stone-look and panel finishes", "Mantel and trim installation", "Drywall and texture integration", "Coordinated painting", "Residential and commercial feature walls"]
 cost: ["Wall width, height and ceiling conditions", "Existing fireplace and utility locations", "Finish material and pattern", "Built-in storage or display details", "Electrical or media coordination", "Demolition and wall preparation"]

@@ -35,48 +35,28 @@ const serviceSchema = isService
   ? {
       "@type": "Service",
       name: entry.data.title,
+      description: entry.data.seoDescription,
+      url: Astro.url.href,
+      serviceType: entry.data.title,
       areaServed: { "@type": "Place", name: "Houston, Texas" },
-      provider: {
-        "@type": "GeneralContractor",
-        name: "OilerBilt Home Remodeling",
-      },
+      provider: { "@id": `${new URL("/", Astro.site ?? Astro.url.origin).href}#organization` },
     }
   : null;
-const crumbs = [
-  {
-    "@type": "ListItem",
-    position: 1,
-    name: "Home",
-    item: new URL("/", Astro.site ?? Astro.url.origin).href,
-  },
-  {
-    "@type": "ListItem",
-    position: 2,
-    name: isService ? "Services" : "Service Areas",
-    item: new URL(
-      isService ? "/#services" : "/service-areas/",
-      Astro.site ?? Astro.url.origin,
-    ).href,
-  },
-  {
-    "@type": "ListItem",
-    position: 3,
-    name: entry.data.title,
-    item: Astro.url.href,
-  },
-];
 const schema = {
-  "@context": "https://schema.org",
   "@graph": [
     ...(isService ? [serviceSchema, faqSchema] : []),
-    { "@type": "BreadcrumbList", itemListElement: crumbs },
   ],
 };
 ---
 
 <BaseLayout
-  title={`${entry.data.title} | OilerBilt`}
-  description={entry.data.description}
+  title={entry.data.seoTitle}
+  description={entry.data.seoDescription}
+  breadcrumbLabel={entry.data.title}
+  breadcrumbParent={{
+    name: isService ? "Services" : "Service Areas",
+    url: isService ? "/#services" : "/service-areas/",
+  }}
   {schema}
 >
   <div class="page-hero">

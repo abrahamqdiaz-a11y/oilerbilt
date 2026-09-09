@@ -4,8 +4,10 @@ const services = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/services" }),
   schema: z.object({
     title: z.string(),
+    seoTitle: z.string(),
     slug: z.string(),
     description: z.string(),
+    seoDescription: z.string(),
     eyebrow: z.string(),
     included: z.array(z.string()),
     cost: z.array(z.string()),
@@ -28,8 +30,10 @@ const locations = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/locations" }),
   schema: z.object({
     title: z.string(),
+    seoTitle: z.string(),
     slug: z.string(),
     description: z.string(),
+    seoDescription: z.string(),
     neighborhoods: z.array(z.string()),
     services: z.array(z.object({ label: z.string(), href: z.string() })),
   }),

@@ -1,7 +1,9 @@
 ---
 title: Remodeling Contractor in Alief, Houston
+seoTitle: Alief TX Home Remodeling & Repair Contractor | OilerBilt
 slug: alief
 description: Kitchen, bathroom, drywall, painting and custom remodeling for Alief homes and businesses in southwest Houston.
+seoDescription: Hire an Alief remodeling contractor for drywall, kitchens, bathrooms, painting and focused home repairs. Request your free OilerBilt estimate today.
 neighborhoods: ["Alief", "Brays Village", "Parkglen", "Braewood Glen", "Royal Oaks", "Alief Community Park", "Westpark Tollway corridor"]
 services: [{label: "Drywall repair in Alief", href: "/drywall-installation-repair-houston/"}, {label: "Kitchen remodeling in Alief", href: "/kitchen-remodeling-houston/"}, {label: "Bathroom remodeling in Alief", href: "/bathroom-remodeling-houston/"}]
 ---

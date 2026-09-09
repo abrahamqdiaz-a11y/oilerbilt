@@ -1,7 +1,9 @@
 ---
 title: Remodeling Contractor in Katy
+seoTitle: Katy TX Home Kitchen & Bathroom Remodeling | OilerBilt
 slug: katy
 description: Kitchen, bathroom, drywall, painting and custom remodeling for Katy-area homes west of Houston.
+seoDescription: Choose OilerBilt for Katy kitchen and bathroom remodeling, drywall repairs, painting and focused home updates. Request your free estimate today.
 neighborhoods: ["Old Katy", "Cinco Ranch", "Nottingham Country", "Westgreen", "Mason Road corridor", "Katy Asian Town", "Mary Jo Peckham Park"]
 services: [{label: "Interior and exterior painting in Katy", href: "/interior-exterior-painting-houston/"}, {label: "Bathroom remodeling in Katy", href: "/bathroom-remodeling-houston/"}, {label: "Drywall repair in Katy", href: "/drywall-installation-repair-houston/"}]
 ---

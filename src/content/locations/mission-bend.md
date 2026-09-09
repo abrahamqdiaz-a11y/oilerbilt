@@ -1,7 +1,9 @@
 ---
 title: Remodeling Contractor in Mission Bend
+seoTitle: Mission Bend TX Home Remodeling Contractor | OilerBilt
 slug: mission-bend
 description: Home remodeling, drywall, painting, kitchens and bathrooms for Mission Bend and the southwest Houston edge.
+seoDescription: Hire a Mission Bend remodeling contractor for drywall, kitchens, bathrooms, painting and home repairs. Request your free OilerBilt estimate today.
 neighborhoods: ["Mission Bend", "Mission Bend North", "Mission Glen", "Mission West", "Addicks Clodine Road", "Bellaire Boulevard", "George Bush Park"]
 services: [{label: "Kitchen remodeling in Mission Bend", href: "/kitchen-remodeling-houston/"}, {label: "Drywall repair in Mission Bend", href: "/drywall-installation-repair-houston/"}, {label: "Custom fireplace walls", href: "/custom-fireplace-walls-houston/"}]
 ---

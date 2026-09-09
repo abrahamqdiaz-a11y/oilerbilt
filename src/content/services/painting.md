@@ -1,7 +1,9 @@
 ---
 title: Interior & Exterior Painting Houston
+seoTitle: Interior & Exterior Painting Houston TX | OilerBilt
 slug: interior-exterior-painting-houston
 description: Residential and commercial painting in Houston with surface repair, preparation and coatings selected for Gulf Coast exposure.
+seoDescription: Book Houston interior and exterior painting with careful preparation, repairs and coatings suited to Gulf Coast conditions. Request an estimate today.
 eyebrow: Residential + commercial painting
 included: ["Interior wall and ceiling painting", "Exterior surface preparation and painting", "Commercial interior and exterior painting", "Drywall patching before paint", "Trim, doors and detail work", "Caulking and minor surface preparation", "Color and sheen coordination", "Protection and cleanup"]
 cost: ["Paintable square footage and ceiling height", "Surface condition and repair needs", "Interior occupancy or exterior access", "Number of colors and finish changes", "Trim, doors and detailed surfaces", "Coating system and number of coats"]

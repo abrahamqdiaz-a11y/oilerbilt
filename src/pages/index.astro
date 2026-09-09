@@ -61,28 +61,11 @@ const services = [
     "/commercial-remodeling-houston/",
   ],
 ];
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "GeneralContractor",
-  name: "OilerBilt Home Remodeling",
-  telephone: phone,
-  email: "oilerbilt@gmail.com",
-  areaServed: [
-    "Houston",
-    "Alief",
-    "Mission Bend",
-    "Sugar Land",
-    "Katy",
-    "Missouri City",
-  ].map((name) => ({ "@type": "Place", name })),
-  sameAs: ["https://www.instagram.com/oilerbilt/"],
-};
 ---
 
 <BaseLayout
-  title="Houston Remodeling Contractor | OilerBilt"
-  description="OilerBilt handles drywall, kitchens, bathrooms, painting and custom remodeling across Houston and southwest Harris County. Request an estimate."
-  {schema}
+  title="Houston Remodeling Contractor & Repairs | OilerBilt"
+  description="Houston remodeling contractor for drywall, kitchens, bathrooms, painting and exterior upgrades across southwest Houston. Request your free estimate today."
 >
   <section class="hero">
     <div class="hero-inner wrap">

@@ -1,7 +1,9 @@
 ---
 title: Commercial Remodeling Houston
+seoTitle: Commercial Remodeling Houston - Build-Outs | OilerBilt
 slug: commercial-remodeling-houston
 description: Focused commercial remodeling, drywall, painting and interior finish work for Houston-area businesses.
+seoDescription: Plan Houston commercial remodeling and focused interior improvements with a clear scope, site review and practical schedule. Request an estimate today.
 eyebrow: Commercial general contracting
 included: ["Commercial interior improvements", "Drywall installation and repair", "Interior and exterior painting", "Feature and accent walls", "Restroom and finish updates", "Demolition and surface preparation", "Occupied-space phasing", "Final punch-list walkthrough"]
 cost: ["Occupied versus vacant work area", "After-hours or phased access", "Demolition and concealed conditions", "Finish and material requirements", "Trade and inspection coordination", "Protection, staging and debris routes"]

@@ -1,7 +1,9 @@
 ---
 title: Drywall Repair Houston
+seoTitle: Drywall Installation & Repair Houston TX | OilerBilt
 slug: drywall-installation-repair-houston
 description: Drywall installation, repair, texture matching and popcorn ceiling removal for Houston homes after leaks, storms, freezes and everyday damage.
+seoDescription: Get Houston drywall installation and repair for damaged ceilings, walls, texture and water-related openings. Request an OilerBilt estimate today.
 eyebrow: Drywall installation + repair
 included: ["Water- and storm-damaged drywall removal and replacement", "Burst-pipe and freeze-damage interior rebuilds", "Crack, hole and joint repair", "Texture matching and finish preparation", "Popcorn ceiling removal", "New drywall hanging, taping and finishing", "Paint-ready wall and ceiling repair", "Residential and commercial work"]
 cost: ["Size and number of damaged areas", "Whether insulation or framing is wet or damaged", "Ceiling height and access", "Texture type and the size of the blend area", "Containment, furniture protection and debris removal", "Whether painting is included after the repair"]

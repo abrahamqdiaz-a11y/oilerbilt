@@ -1,7 +1,9 @@
 ---
 title: Remodeling Contractor in Sugar Land
+seoTitle: Sugar Land TX Home Remodeling Contractor | OilerBilt
 slug: sugar-land
 description: Kitchen, bathroom, drywall, painting and custom remodeling for established Sugar Land homes.
+seoDescription: Hire a Sugar Land remodeling contractor for kitchens, bathrooms, drywall, painting and home repairs. Request your free OilerBilt estimate today.
 neighborhoods: ["Sugar Mill", "The Highlands", "First Colony", "Settlers Park", "Telfair", "Sugar Land Town Square", "Eldridge Road corridor"]
 services: [{label: "Bathroom remodeling in Sugar Land", href: "/bathroom-remodeling-houston/"}, {label: "Kitchen remodeling in Sugar Land", href: "/kitchen-remodeling-houston/"}, {label: "Custom fireplace walls", href: "/custom-fireplace-walls-houston/"}]
 ---

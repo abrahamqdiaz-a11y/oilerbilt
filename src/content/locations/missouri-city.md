@@ -1,7 +1,9 @@
 ---
 title: Remodeling Contractor in Missouri City
+seoTitle: Missouri City TX Remodeling Contractor | OilerBilt
 slug: missouri-city
 description: Bathroom, kitchen, drywall, painting and custom remodeling for Missouri City homes southwest of Houston.
+seoDescription: Hire a Missouri City remodeling contractor for kitchens, bathrooms, drywall, painting and home repairs. Request your free OilerBilt estimate today.
 neighborhoods: ["Quail Valley", "Hunters Glen", "Fondren Park", "Lake Olympia", "Sienna", "Cartwright Road", "Freedom Tree Park"]
 services: [{label: "Bathroom remodeling in Missouri City", href: "/bathroom-remodeling-houston/"}, {label: "Kitchen remodeling in Missouri City", href: "/kitchen-remodeling-houston/"}, {label: "Painting in Missouri City", href: "/interior-exterior-painting-houston/"}]
 ---
