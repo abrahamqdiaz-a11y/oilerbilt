@@ -12,8 +12,8 @@ Do not publish until the contact facts below are verified character for characte
 - [ ] Confirm the final production domain and replace the placeholder Netlify domain if different.
 - [ ] Export full-resolution OilerBilt project photos from original files or the Instagram archive.
 - [ ] Confirm the service category and honest location context for every project photo.
-- [ ] Strip EXIF, including GPS, from every image before it enters `public/images/`.
-- [ ] Convert approved images to WebP plus JPEG fallback and create responsive sizes.
+- [x] Strip metadata, including EXIF/GPS, from the six supplied project photos before publishing.
+- [x] Convert the six supplied project photos to responsive 640px/1200px WebP and JPEG files.
 - [ ] Replace gallery and service-page photo placeholders with approved work.
 - [ ] Confirm any review text directly with the client before adding a review section.
 - [ ] Confirm warranty language before publishing it.
