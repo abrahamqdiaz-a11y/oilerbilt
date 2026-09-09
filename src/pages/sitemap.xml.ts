@@ -18,7 +18,9 @@ export const GET: APIRoute = async () => {
   const pages: SitemapEntry[] = [
     { path: "/", changefreq: "weekly", priority: 1.0 },
     { path: "/gallery/", changefreq: "monthly", priority: 0.8 },
+    { path: "/privacy-policy/", changefreq: "yearly", priority: 0.3 },
     { path: "/service-areas/", changefreq: "monthly", priority: 0.8 },
+    { path: "/terms-of-service/", changefreq: "yearly", priority: 0.3 },
     { path: "/about/", changefreq: "yearly", priority: 0.6 },
     { path: "/contact/", changefreq: "yearly", priority: 0.7 },
     { path: "/free-estimate/", changefreq: "yearly", priority: 0.8 },
