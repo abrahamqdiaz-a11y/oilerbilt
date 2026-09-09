@@ -48,7 +48,7 @@ const noindex = suppliedNoindex ?? Astro.url.pathname === "/thank-you/";
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const siteUrl = new URL("/", Astro.site ?? Astro.url.origin).href;
 const imageUrl = new URL("/og.png", siteUrl).href;
-const logoUrl = new URL("/favicon.svg", siteUrl).href;
+const logoUrl = new URL("/oilerbilt-logo.png", siteUrl).href;
 const nav = [
   ["Services", "/#services"],
   ["Gallery", "/gallery/"],
@@ -146,6 +146,9 @@ const jsonLd = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
@@ -188,10 +191,10 @@ const jsonLd = {
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="/" aria-label="OilerBilt Home Remodeling home">
-          <span class="brand-mark">OB</span>
-          <span>
-            OilerBilt<small>Home Remodeling</small>
-          </span>
+          <picture>
+            <source srcset="/oilerbilt-logo.webp" type="image/webp" />
+            <img class="brand-logo" src="/oilerbilt-logo.png" alt="OilerBilt Home Remodeling" width="580" height="300" />
+          </picture>
         </a>
         <nav aria-label="Primary navigation">
           {nav.map(([label, href]) => (
@@ -209,11 +212,11 @@ const jsonLd = {
     <footer>
       <div class="footer-grid wrap">
         <div>
-          <a class="brand footer-brand" href="/">
-            <span class="brand-mark">OB</span>
-            <span>
-              OilerBilt<small>Home Remodeling</small>
-            </span>
+          <a class="brand footer-brand" href="/" aria-label="OilerBilt Home Remodeling home">
+            <picture>
+              <source srcset="/oilerbilt-logo.webp" type="image/webp" />
+              <img class="brand-logo" src="/oilerbilt-logo.png" alt="OilerBilt Home Remodeling" width="580" height="300" loading="lazy" />
+            </picture>
           </a>
           <p>Serving Houston and southwest Harris County.</p>
           <a
