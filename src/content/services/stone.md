@@ -8,6 +8,19 @@ cost: ["Walkway length, width and pattern", "Stone type, thickness and availabil
 related: [{label: "Exterior painting", href: "/interior-exterior-painting-houston/"}, {label: "General commercial remodeling", href: "/commercial-remodeling-houston/"}, {label: "Drywall and interior repair", href: "/drywall-installation-repair-houston/"}]
 locations: [{label: "Exterior upgrades in Sugar Land", href: "/service-areas/sugar-land/"}, {label: "Exterior upgrades in Mission Bend", href: "/service-areas/mission-bend/"}]
 faqs: [{q: "What kind of stone can be used?", a: "Material choice depends on the look, traffic, thickness, availability and installation method. We confirm actual samples before setting the scope."}, {q: "How do you account for Houston rain?", a: "Grade, base and drainage are reviewed so the new work does not intentionally trap water against the house or create an obvious low point."}, {q: "Can you replace an existing path?", a: "Yes, when removal and disposal are included in the scope and site access allows it."}, {q: "Do small hardscape jobs need permits?", a: "Requirements depend on location, utilities, drainage and scope. Easements and HOA rules may also matter."}, {q: "How long does installation take?", a: "Timing depends on size, excavation, weather and material delivery. The site review gives a practical schedule."}, {q: "Will the yard be protected?", a: "Access and likely disturbance are discussed before work begins. Heavy material still requires a realistic path into the work area."}]
+images:
+  - base: stone-walkway-installation-houston-01
+    alt: Stepping-stone walkway being laid in dark gravel beside a Houston home
+    caption: Walkway layout in progress with stone spacing, gravel and edge restraint visible.
+    category: Exterior
+  - base: stone-walkway-houston-02
+    alt: Completed double-row stone walkway set in dark gravel beside a backyard patio
+    caption: Completed backyard path using paired stone pavers set in dark gravel.
+    category: Exterior
+  - base: stone-walkway-driveway-connection-houston-03
+    alt: Concrete front walk connected to a stone-and-gravel path beside a driveway
+    caption: Front concrete walk connected to a stone-and-gravel path at the driveway.
+    category: Exterior
 ---
 ## A walkway has to do more than look finished
 
