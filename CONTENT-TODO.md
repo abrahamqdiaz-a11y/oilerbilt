@@ -3,10 +3,10 @@
 Do not publish until the contact facts below are verified character for character against the live business listings.
 
 - [ ] Confirm the exact public business name on Yelp and MapQuest.
-- [ ] Add the exact phone number and preserve its public formatting everywhere.
-- [ ] Add the customer-facing email address.
+- [x] Add the exact phone number and preserve its public formatting everywhere: `(469) 249-2563`.
+- [x] Add the customer-facing email address: `oilerbilt@gmail.com`.
 - [ ] Add the canonical Yelp and MapQuest listing URLs.
-- [ ] Add the verified phone, business hours, Yelp URL and MapQuest URL to homepage `GeneralContractor` schema.
+- [ ] Add verified business hours, Yelp URL and MapQuest URL to homepage `GeneralContractor` schema. Phone and email are complete.
 - [ ] Confirm the Instagram URL and account ownership for `@oilerbilt`.
 - [ ] Confirm public business hours; hours are currently omitted from schema.
 - [ ] Confirm the final production domain and replace the placeholder Netlify domain if different.
