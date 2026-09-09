@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 
-const SITE = "https://oilerbilt.netlify.app";
+const SITE = "https://oilerbilt.com";
 const LAST_MODIFIED = "2026-09-09";
 
 type SitemapEntry = {

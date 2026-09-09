@@ -3,7 +3,7 @@ import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const dist = fileURLToPath(new URL("../dist/", import.meta.url));
-const site = "https://oilerbilt.netlify.app";
+const site = "https://oilerbilt.com";
 const failures = [];
 const titles = new Map();
 const descriptions = new Map();

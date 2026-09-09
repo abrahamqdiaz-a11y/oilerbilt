@@ -40,4 +40,4 @@ Disallow: /api/
 Disallow: /dashboard/
 Disallow: /account/
 
-Sitemap: https://oilerbilt.netlify.app/sitemap.xml
+Sitemap: https://oilerbilt.com/sitemap.xml
