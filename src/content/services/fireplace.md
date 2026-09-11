@@ -10,6 +10,11 @@ cost: ["Wall width, height and ceiling conditions", "Existing fireplace and util
 related: [{label: "Drywall installation and repair", href: "/drywall-installation-repair-houston/"}, {label: "Interior painting", href: "/interior-exterior-painting-houston/"}, {label: "Kitchen remodeling", href: "/kitchen-remodeling-houston/"}]
 locations: [{label: "Custom walls in Sugar Land", href: "/service-areas/sugar-land/"}, {label: "Custom walls in Katy", href: "/service-areas/katy/"}]
 faqs: [{q: "Can you build around an existing fireplace?", a: "Often, yes. The existing unit, clearances and manufacturer requirements have to be identified before finish dimensions are set."}, {q: "Can the wall include a television?", a: "The layout can account for a television, wiring path and equipment access. Heat and clearance around the fireplace must remain the first constraint."}, {q: "Do you install built-in shelves?", a: "Built-ins and display niches can be included when they fit the wall and project scope."}, {q: "How long does a custom fireplace wall take?", a: "Timing depends on demolition, framing, finish material and trade coordination. A site review is needed before scheduling."}, {q: "Can we stay in the house during work?", a: "Usually, with the work area isolated. Expect noise, dust control and limited access to the room."}, {q: "Do you handle paint and trim?", a: "Yes, drywall finishing, trim and coordinated painting can be included in the scope."}]
+images:
+  - base: custom-feature-wall-framing-01
+    alt: Floor-to-ceiling wood framing for a custom living-room feature wall
+    caption: Feature-wall framing laid out for a large center section and narrower side bays.
+    category: Fireplace
 ---
 ## A focal wall should fit the room, not fight it
 
