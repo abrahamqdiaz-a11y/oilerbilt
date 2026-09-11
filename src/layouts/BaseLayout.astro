@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import "../styles/global.css";
 import "@fontsource-variable/inter";
 import "@fontsource/barlow-condensed/600.css";
@@ -12,38 +13,13 @@ interface Props {
   breadcrumbParent?: { name: string; url: string };
 }
 const {
-  title: suppliedTitle,
-  description: suppliedDescription,
+  title,
+  description,
   schema,
   noindex: suppliedNoindex,
   breadcrumbLabel,
   breadcrumbParent,
 } = Astro.props;
-const staticSeo: Record<string, { title: string; description: string }> = {
-  "/about/": {
-    title: "Houston Remodeling Company TX - About Us | OilerBilt",
-    description: "Learn how OilerBilt approaches residential and commercial remodeling across Houston with clear scopes and practical planning. Meet our company today.",
-  },
-  "/contact/": {
-    title: "Houston Remodeling Contractor Contact TX | OilerBilt",
-    description: "Contact OilerBilt for Houston remodeling, drywall, painting, bathrooms and exterior upgrades. Call or request your free project estimate today.",
-  },
-  "/free-estimate/": {
-    title: "Free Houston Remodeling Estimate - Start | OilerBilt",
-    description: "Request a free Houston remodeling estimate for drywall, kitchens, bathrooms, painting or exterior work. Share your project details to get started.",
-  },
-  "/service-areas/": {
-    title: "Houston Area Remodeling Services & Repairs | OilerBilt",
-    description: "Find OilerBilt remodeling services across Houston, Alief, Mission Bend, Sugar Land, Katy and Missouri City. Check your local service area today.",
-  },
-  "/thank-you/": {
-    title: "Houston Remodeling Estimate Request Received | OilerBilt",
-    description: "Your Houston remodeling estimate request was received by OilerBilt. We will review your project details and follow up using your contact information.",
-  },
-};
-const pageSeo = staticSeo[Astro.url.pathname];
-const title = pageSeo?.title ?? suppliedTitle;
-const description = pageSeo?.description ?? suppliedDescription;
 const noindex = suppliedNoindex ?? Astro.url.pathname === "/thank-you/";
 const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const siteUrl = new URL("/", Astro.site ?? Astro.url.origin).href;
@@ -59,6 +35,17 @@ const nav = [
 const phone = "(469) 249-2563";
 const phoneHref = "tel:+14692492563";
 const email = "oilerbilt@gmail.com";
+const areaServed = [
+  "Houston",
+  "Alief",
+  "Mission Bend",
+  "Sugar Land",
+  "Katy",
+  "Missouri City",
+];
+const serviceEntries = (await getCollection("services")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title),
+);
 const providedSchema = schema
   ? (Array.isArray(schema) ? schema : [schema]).flatMap((item: any) =>
       item["@graph"] ?? [item],
@@ -73,27 +60,28 @@ const pathLabels: Record<string, string> = {
   "thank-you": "Request Received",
 };
 const segments = Astro.url.pathname.split("/").filter(Boolean);
+const parentUrl = breadcrumbParent
+  ? new URL(breadcrumbParent.url, siteUrl)
+  : segments.length > 1
+    ? new URL(`/${segments[0]}/`, siteUrl)
+    : null;
+// A parent whose URL resolves to the homepage (for example the "/#services"
+// anchor) would repeat position 1, so it is left out of the structured chain.
+const parentCrumb =
+  parentUrl && parentUrl.pathname !== "/"
+    ? {
+        "@type": "ListItem",
+        name: breadcrumbParent?.name ?? pathLabels[segments[0]] ?? segments[0],
+        item: parentUrl.href,
+      }
+    : null;
 const breadcrumbItems = segments.length
   ? [
       { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
-      ...(breadcrumbParent
-        ? [{
-            "@type": "ListItem",
-            position: 2,
-            name: breadcrumbParent.name,
-            item: new URL(breadcrumbParent.url, siteUrl).href,
-          }]
-        : segments.length > 1
-          ? [{
-              "@type": "ListItem",
-              position: 2,
-              name: pathLabels[segments[0]] ?? segments[0],
-              item: new URL(`/${segments[0]}/`, siteUrl).href,
-            }]
-          : []),
+      ...(parentCrumb ? [{ ...parentCrumb, position: 2 }] : []),
       {
         "@type": "ListItem",
-        position: breadcrumbParent || segments.length > 1 ? 3 : 2,
+        position: parentCrumb ? 3 : 2,
         name: breadcrumbLabel ?? pathLabels[segments.at(-1) ?? ""] ?? title.split(" |")[0],
         item: canonical.href,
       },
@@ -124,13 +112,56 @@ const jsonLd = {
       "@type": ["Organization", "GeneralContractor"],
       "@id": `${siteUrl}#organization`,
       name: "OilerBilt Home Remodeling",
+      alternateName: "OilerBilt",
       url: siteUrl,
-      logo: logoUrl,
+      description:
+        "Residential and commercial remodeling contractor serving Houston and southwest Harris County, Texas.",
+      logo: {
+        "@type": "ImageObject",
+        url: logoUrl,
+        width: 580,
+        height: 300,
+      },
       image: imageUrl,
-      telephone: phone,
+      telephone: "+1-469-249-2563",
       email,
-      areaServed: ["Houston", "Alief", "Mission Bend", "Sugar Land", "Katy", "Missouri City"],
+      // Service-area business operating from a private residence: locality and
+      // region only. Never publish a street address here.
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Houston",
+        addressRegion: "TX",
+        addressCountry: "US",
+      },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: "+1-469-249-2563",
+        email,
+        areaServed: "US",
+        availableLanguage: "English",
+      },
+      areaServed: areaServed.map((name) => ({
+        "@type": "City",
+        name,
+        containedInPlace: { "@type": "State", name: "Texas" },
+      })),
+      knowsAbout: serviceEntries.map((entry) => entry.data.title),
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Remodeling services",
+        itemListElement: serviceEntries.map((entry) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: entry.data.title,
+            url: new URL(`/${entry.data.slug}/`, siteUrl).href,
+          },
+        })),
+      },
       sameAs: ["https://www.instagram.com/oilerbilt/"],
+      // No aggregateRating, review, priceRange, foundingDate, award or
+      // license claim is published: none of those facts are verified yet.
     },
     ...(breadcrumbItems.length
       ? [{ "@type": "BreadcrumbList", itemListElement: breadcrumbItems }]

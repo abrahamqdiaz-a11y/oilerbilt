@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectGallery from "../components/ProjectGallery.astro";
+import { jpegSize } from "../lib/image-size";
 const cats = [
   "All",
   "Kitchen",
@@ -86,12 +87,35 @@ const images = [
     category: "Bathroom",
   },
 ];
+const site = new URL("/", Astro.site ?? Astro.url.origin);
+const schema = {
+  "@type": "ImageGallery",
+  "@id": `${Astro.url.href}#gallery`,
+  name: "OilerBilt Houston remodeling project gallery",
+  url: Astro.url.href,
+  image: images.map((image) => {
+    const path = `/images/${image.base}-1200.jpg`;
+    const { width, height } = jpegSize(path);
+    return {
+      "@type": "ImageObject",
+      contentUrl: new URL(path, site).href,
+      thumbnailUrl: new URL(`/images/${image.base}-640.jpg`, site).href,
+      caption: image.caption,
+      description: image.alt,
+      width,
+      height,
+      creator: { "@id": `${site.href}#organization` },
+      creditText: "OilerBilt Home Remodeling",
+    };
+  }),
+};
 ---
 
 <BaseLayout
   title="Houston Home Remodeling Project Gallery | OilerBilt"
   description="View real Houston remodeling project photos from OilerBilt, including drywall, bathrooms, flooring and stone walkways. Explore our recent work today."
   breadcrumbLabel="Project Gallery"
+  {schema}
 >
   <div class="page-hero">
     <div class="wrap">
@@ -113,7 +137,7 @@ const images = [
         ))}
       </div>
       <div id="gallery">
-        <ProjectGallery {images} />
+        <ProjectGallery {images} priority />
       </div>
     </div>
   </section>

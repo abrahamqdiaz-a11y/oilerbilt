@@ -16,6 +16,12 @@ Do not publish until the contact facts below are verified character for characte
 - [x] Convert the six supplied project photos to responsive 640px/1200px WebP and JPEG files.
 - [ ] Replace gallery and service-page photo placeholders with approved work.
 - [ ] Confirm any review text directly with the client before adding a review section.
+      No `Review` or `AggregateRating` markup is published, and `scripts/seo-audit.mjs`
+      now fails the build if any is added.
+- [ ] Confirm whether Spanish-language service is offered before listing it in
+      the schema `availableLanguage` (currently English only).
 - [ ] Confirm warranty language before publishing it.
 
 Never add a street address. OilerBilt is a service-area business operating from a private residence.
+The `PostalAddress` in the homepage organization schema intentionally carries
+locality, region and country only.
