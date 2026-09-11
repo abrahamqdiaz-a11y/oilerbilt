@@ -21,6 +21,7 @@ export function getStaticPaths() {
 const { entry, type } = Astro.props;
 const { Content } = await render(entry);
 const isService = type === "service";
+const siteUrl = new URL("/", Astro.site ?? Astro.url.origin);
 const faqSchema = isService
   ? {
       "@type": "FAQPage",
@@ -39,13 +40,25 @@ const serviceSchema = isService
       url: Astro.url.href,
       serviceType: entry.data.title,
       areaServed: { "@type": "Place", name: "Houston, Texas" },
-      provider: { "@id": `${new URL("/", Astro.site ?? Astro.url.origin).href}#organization` },
+      provider: { "@id": `${siteUrl.href}#organization` },
     }
   : null;
+// Location pages are a hub of the services offered in one city, so they list
+// those services rather than repeating the organization as a second business.
+const areaSchema = isService
+  ? null
+  : {
+      "@type": "ItemList",
+      name: `Remodeling services in ${entry.data.title.replace(/^Remodeling Contractor in /, "")}`,
+      itemListElement: entry.data.services.map((x: any, index: number) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: x.label,
+        url: new URL(x.href, siteUrl).href,
+      })),
+    };
 const schema = {
-  "@graph": [
-    ...(isService ? [serviceSchema, faqSchema] : []),
-  ],
+  "@graph": isService ? [serviceSchema, faqSchema] : [areaSchema],
 };
 ---
 

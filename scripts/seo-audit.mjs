@@ -109,6 +109,14 @@ for (const file of await findHtml(dist)) {
       failures.push(`${url}: invalid JSON-LD`);
     }
   }
+  for (const type of ["Review", "AggregateRating"]) {
+    if (schemaTypes.includes(type))
+      failures.push(`${url}: publishes ${type} markup, which is not verified`);
+  }
+  for (const field of ["aggregateRating", "reviewBody", "ratingValue"]) {
+    if (html.includes(`"${field}"`))
+      failures.push(`${url}: publishes unverified ${field} in structured data`);
+  }
   for (const type of ["WebSite", "WebPage", "Organization"]) {
     if (!schemaTypes.includes(type)) failures.push(`${url}: missing ${type} schema`);
   }
@@ -131,6 +139,48 @@ for (const field of ["lastmod", "changefreq", "priority"]) {
   if ((sitemap.match(new RegExp(`<${field}>`, "g")) ?? []).length !== sitemapUrls.length)
     failures.push(`sitemap.xml: ${field} count does not match URL count`);
 }
+
+const robots = await readFile(join(dist, "robots.txt"), "utf8");
+const robotsAgents = new Set(
+  [...robots.matchAll(/^User-agent:\s*(.+)$/gim)].map((entry) =>
+    entry[1].trim().toLowerCase(),
+  ),
+);
+// Answer engines the site intends to stay citable in.
+for (const agent of [
+  "*",
+  "googlebot",
+  "bingbot",
+  "gptbot",
+  "oai-searchbot",
+  "chatgpt-user",
+  "claudebot",
+  "claude-user",
+  "perplexitybot",
+  "google-extended",
+  "applebot-extended",
+  "meta-externalagent",
+  "ccbot",
+]) {
+  if (!robotsAgents.has(agent))
+    failures.push(`robots.txt: no rule for ${agent}`);
+}
+if (/^Disallow:\s*\/\s*$/im.test(robots))
+  failures.push("robots.txt: blanket Disallow: / would block the whole site");
+if (!robots.includes(`Sitemap: ${site}/sitemap.xml`))
+  failures.push("robots.txt: missing sitemap reference");
+
+const llms = await readFile(join(dist, "llms.txt"), "utf8").catch(() => "");
+if (!llms.startsWith("# OilerBilt"))
+  failures.push("llms.txt: missing or does not start with the site heading");
+for (const url of sitemapUrls) {
+  if (url !== `${site}/` && !llms.includes(url))
+    failures.push(`llms.txt: does not list ${url}`);
+}
+
+await readFile(join(dist, "404.html"), "utf8").catch(() =>
+  failures.push("404.html: missing"),
+);
 
 if (failures.length) {
   console.error(`SEO audit failed (${failures.length}):\n- ${failures.join("\n- ")}`);
