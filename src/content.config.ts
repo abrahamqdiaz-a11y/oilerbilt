@@ -38,4 +38,22 @@ const locations = defineCollection({
     services: z.array(z.object({ label: z.string(), href: z.string() })),
   }),
 });
-export const collections = { services, locations };
+// Homeowner Resources guides, published at /homeowner-resources/<slug>/.
+const resources = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/resources" }),
+  schema: z.object({
+    title: z.string(),
+    seoTitle: z.string(),
+    slug: z.string(),
+    description: z.string(),
+    seoDescription: z.string(),
+    category: z.enum(["bathroom", "kitchen", "maintenance", "houston"]),
+    summary: z.string(),
+    published: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+    featured: z.boolean().default(false),
+    image: z.object({ base: z.string(), alt: z.string() }),
+    services: z.array(z.object({ label: z.string(), href: z.string() })),
+  }),
+});
+export const collections = { services, locations, resources };

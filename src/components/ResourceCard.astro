@@ -1,0 +1,62 @@
+---
+import ResourceImage from "./ResourceImage.astro";
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  category: string;
+  image?: { base: string; alt: string };
+  /** "lead" renders the wide featured layout. */
+  variant?: "lead" | "default";
+  cta?: string;
+  meta?: string;
+  /**
+   * A guide that is not published yet. Its title is not a link; the call to
+   * action points at the closest existing page instead.
+   */
+  planned?: boolean;
+}
+const {
+  href,
+  title,
+  description,
+  category,
+  image,
+  variant = "default",
+  cta = "Read the guide",
+  meta,
+  planned = false,
+} = Astro.props;
+---
+
+<article
+  class:list={[
+    "resource-card",
+    { "resource-card--lead": variant === "lead", "resource-card--planned": planned },
+  ]}
+>
+  <div class="resource-card__media">
+    {image ? (
+      <ResourceImage
+        base={image.base}
+        alt={image.alt}
+        sizes={variant === "lead" ? "(max-width: 850px) 100vw, 55vw" : "(max-width: 850px) 100vw, 33vw"}
+      />
+    ) : (
+      <div class="resource-card__art" aria-hidden="true"></div>
+    )}
+  </div>
+  <div class="resource-card__body">
+    <p class="resource-label">{category}</p>
+    <h3>{planned ? title : <a href={href}>{title}</a>}</h3>
+    <p>{description}</p>
+    <div class="resource-card__foot">
+      {planned ? (
+        <a class="resource-card__cta" href={href}>{cta} →</a>
+      ) : (
+        <span class="resource-card__cta" aria-hidden="true">{cta} →</span>
+      )}
+      {meta && <span class="resource-card__meta">{meta}</span>}
+    </div>
+  </div>
+</article>

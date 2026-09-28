@@ -5,9 +5,10 @@ const SITE = "https://oilerbilt.com";
 const url = (path: string) => new URL(path, SITE).href;
 
 export const GET: APIRoute = async () => {
-  const [services, locations] = await Promise.all([
+  const [services, locations, resources] = await Promise.all([
     getCollection("services"),
     getCollection("locations"),
+    getCollection("resources"),
   ]);
   const line = (label: string, path: string, note: string) =>
     `- [${label}](${url(path)}): ${note}`;
@@ -42,6 +43,15 @@ ${locations
     line(entry.data.title, `/service-areas/${entry.data.slug}/`, entry.data.description),
   )
   .join("\n")}
+
+## Homeowner resources
+
+${[
+  line("Homeowner Resources", "/homeowner-resources/", "Guides for Houston homeowners on remodeling, water damage and home maintenance."),
+  ...resources.map((entry) =>
+    line(entry.data.title, `/homeowner-resources/${entry.data.slug}/`, entry.data.description),
+  ),
+].join("\n")}
 
 ## Company
 

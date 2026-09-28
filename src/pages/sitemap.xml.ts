@@ -43,9 +43,10 @@ type SitemapEntry = {
 };
 
 export const GET: APIRoute = async () => {
-  const [services, locations] = await Promise.all([
+  const [services, locations, resources] = await Promise.all([
     getCollection("services"),
     getCollection("locations"),
+    getCollection("resources"),
   ]);
   const pages: SitemapEntry[] = [
     { path: "/", source: pageSource("index.astro"), changefreq: "weekly", priority: 1.0 },
@@ -56,6 +57,13 @@ export const GET: APIRoute = async () => {
     { path: "/about/", source: pageSource("about.astro"), changefreq: "yearly", priority: 0.6 },
     { path: "/contact/", source: pageSource("contact.astro"), changefreq: "yearly", priority: 0.7 },
     { path: "/free-estimate/", source: pageSource("free-estimate.astro"), changefreq: "yearly", priority: 0.8 },
+    { path: "/homeowner-resources/", source: pageSource("homeowner-resources/index.astro"), changefreq: "weekly", priority: 0.8 },
+    ...resources.map((entry) => ({
+      path: `/homeowner-resources/${entry.data.slug}/`,
+      source: entry.filePath ?? "",
+      changefreq: "monthly" as const,
+      priority: 0.7,
+    })),
     ...services.map((entry) => ({
       path: `/${entry.data.slug}/`,
       source: entry.filePath ?? "",
