@@ -1,0 +1,157 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EstimateForm from "../../components/EstimateForm.astro";
+import ResourceImage from "../../components/ResourceImage.astro";
+import { categoryById } from "../../data/homeowner-resources";
+import { readingMinutes } from "../../lib/reading-time";
+
+export async function getStaticPaths() {
+  const guides = await getCollection("resources");
+  return guides.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const category = categoryById[entry.data.category];
+const updated = entry.data.updated ?? entry.data.published;
+const dateLabel = updated.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+const sectionLinks = headings.filter((heading) => heading.depth === 2);
+const siteUrl = new URL("/", Astro.site ?? Astro.url.origin);
+const schema = {
+  "@type": "Article",
+  headline: entry.data.title,
+  description: entry.data.seoDescription,
+  image: new URL(`/images/${entry.data.image.base}-1200.jpg`, siteUrl).href,
+  datePublished: entry.data.published.toISOString().slice(0, 10),
+  dateModified: updated.toISOString().slice(0, 10),
+  author: { "@id": `${siteUrl.href}#organization` },
+  publisher: { "@id": `${siteUrl.href}#organization` },
+  mainEntityOfPage: { "@id": `${new URL(Astro.url.pathname, siteUrl).href}#webpage` },
+  articleSection: category.label,
+  inLanguage: "en-US",
+};
+---
+
+<BaseLayout
+  title={entry.data.seoTitle}
+  description={entry.data.seoDescription}
+  breadcrumbLabel={entry.data.title}
+  breadcrumbParent={{ name: "Homeowner Resources", url: "/homeowner-resources/" }}
+  {schema}
+>
+  <div class="page-hero guide-hero">
+    <div class="wrap guide-hero__grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> /{" "}
+          <a href="/homeowner-resources/">Homeowner resources</a> /{" "}
+          <a href={`/homeowner-resources/#${category.id}`}>{category.label}</a>
+        </nav>
+        <p class="eyebrow">{category.label} guide</p>
+        <h1>{entry.data.title}</h1>
+        <p>{entry.data.description}</p>
+        <p class="guide-meta">
+          <span>Updated <time datetime={updated.toISOString().slice(0, 10)}>{dateLabel}</time></span>
+          <span>{readingMinutes(entry.body)} min read</span>
+          <span>By the OilerBilt team</span>
+        </p>
+      </div>
+      <figure class="resources-hero__media">
+        <ResourceImage
+          base={entry.data.image.base}
+          alt={entry.data.image.alt}
+          sizes="(max-width: 850px) 100vw, 40vw"
+          priority
+        />
+      </figure>
+    </div>
+  </div>
+
+  <div class="wrap guide-layout">
+    <article class="guide-body">
+      <div class="guide-summary">
+        <p class="resource-label">The short answer</p>
+        <p>{entry.data.summary}</p>
+      </div>
+      <Content />
+    </article>
+    <aside class="guide-aside" aria-label="Guide navigation and next steps">
+      {sectionLinks.length > 1 && (
+        <nav class="guide-toc" aria-label="In this guide">
+          <p class="resource-category__label">In this guide</p>
+          <ol>
+            {sectionLinks.map((heading) => (
+              <li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <div class="guide-services">
+        <p class="resource-category__label">Related services</p>
+        <ul class="resource-links">
+          {entry.data.services.map((link) => (
+            <li><a href={link.href}>{link.label} →</a></li>
+          ))}
+          <li><a href="/gallery/">Project gallery →</a></li>
+        </ul>
+      </div>
+      <div class="guide-help">
+        <p class="resource-label">Need a closer look?</p>
+        <p>
+          Send a photo of what you are seeing. We will tell you whether it needs
+          an on-site review.
+        </p>
+        <a class="button" href="/free-estimate/">Request an inspection</a>
+        <a class="guide-help__call" href="tel:+14692492563">or call (469) 249-2563</a>
+      </div>
+    </aside>
+  </div>
+
+  <section class="band guide-more">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Keep reading</p>
+          <h2>More {category.label.toLowerCase()} resources</h2>
+        </div>
+        <p>
+          <a class="text-link guide-more__link" href="/homeowner-resources/">
+            Browse all homeowner resources →
+          </a>
+        </p>
+      </div>
+      <ul class="guide-list">
+        {category.planned.slice(0, 3).map((item) => (
+          <li>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </div>
+            <a href={item.link.href}>{item.link.label} →</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap cta-grid">
+      <div>
+        <p class="eyebrow" style="color:white">Next step</p>
+        <h2>Show us the space.</h2>
+        <p>
+          Describe what you are seeing and add a photo if you have one. We will
+          follow up about the location, the likely scope and a time to take a
+          closer look.
+        </p>
+      </div>
+      <EstimateForm />
+    </div>
+  </section>
+</BaseLayout>

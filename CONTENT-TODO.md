@@ -25,3 +25,13 @@ Do not publish until the contact facts below are verified character for characte
 Never add a street address. OilerBilt is a service-area business operating from a private residence.
 The `PostalAddress` in the homepage organization schema intentionally carries
 locality, region and country only.
+
+## Homeowner Resources
+
+- [ ] Client review of `/homeowner-resources/water-under-bathroom-tile-houston/` before promotion.
+- [ ] Write the planned guides listed in `src/data/homeowner-resources.ts`. When one is
+      published in `src/content/resources/`, remove it from that category's `planned` list
+      (and from `featuredPlanned` in `src/pages/homeowner-resources/index.astro`).
+- [ ] The bathroom cost guide must follow the site rule of no made-up price ranges:
+      explain cost factors unless verified OilerBilt pricing is supplied.
+- [ ] Kitchen resources have no approved project photo yet; add one when available.

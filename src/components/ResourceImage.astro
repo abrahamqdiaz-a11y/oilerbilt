@@ -1,0 +1,35 @@
+---
+import { jpegSize } from "../lib/image-size";
+interface Props {
+  base: string;
+  alt: string;
+  sizes?: string;
+  /** Marks the image as the likely LCP element. */
+  priority?: boolean;
+}
+const { base, alt, sizes = "(max-width: 700px) 100vw, 40vw", priority = false } = Astro.props;
+const src = `/images/${base}-1200.jpg`;
+const { width, height } = jpegSize(src);
+---
+
+<picture>
+  <source
+    type="image/webp"
+    srcset={`/images/${base}-640.webp 640w, /images/${base}-1200.webp 1200w`}
+    sizes={sizes}
+  />
+  <source
+    type="image/jpeg"
+    srcset={`/images/${base}-640.jpg 640w, /images/${base}-1200.jpg 1200w`}
+    sizes={sizes}
+  />
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? "eager" : "lazy"}
+    fetchpriority={priority ? "high" : undefined}
+    decoding="async"
+  />
+</picture>

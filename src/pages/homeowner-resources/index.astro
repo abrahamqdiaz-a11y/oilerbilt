@@ -1,0 +1,274 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EstimateForm from "../../components/EstimateForm.astro";
+import ResourceCard from "../../components/ResourceCard.astro";
+import ResourceImage from "../../components/ResourceImage.astro";
+import { categoryById, resourceCategories } from "../../data/homeowner-resources";
+import { readingMinutes } from "../../lib/reading-time";
+
+const guides = (await getCollection("resources")).sort(
+  (a, b) => b.data.published.getTime() - a.data.published.getTime(),
+);
+const guideUrl = (slug: string) => `/homeowner-resources/${slug}/`;
+const minutes = (body?: string) => `${readingMinutes(body)} min read`;
+
+const lead = guides.find((guide) => guide.data.featured) ?? guides[0];
+// Two headline topics that are still being written. Until they publish, each
+// points at the service page that already answers part of the question.
+const featuredPlanned = [
+  {
+    category: "Remodeling cost guide",
+    title: "How Much Does a Bathroom Remodel Cost in Houston?",
+    description:
+      "Understand the materials, layout decisions and hidden conditions that shape what a bathroom remodel costs.",
+    cta: "See what affects bathroom cost",
+    href: "/bathroom-remodeling-houston/",
+    image: {
+      base: "bathroom-demolition-houston-01",
+      alt: "Houston bathroom during demolition with shower walls opened to framing",
+    },
+  },
+  {
+    category: "Home maintenance guide",
+    title: "Signs Your Home Needs Attention Before Small Problems Become Expensive Repairs",
+    description:
+      "Stains, cracks, soft spots and smells worth a closer look, and what each one usually points to.",
+    cta: "See ceiling and water-stain repair",
+    href: "/ceiling-repair-houston/",
+    image: {
+      base: "drywall-ceiling-damage-houston-03",
+      alt: "Ceiling opened to expose framing and insulation before repair",
+    },
+  },
+];
+
+const sections = resourceCategories.map((category) => ({
+  ...category,
+  guides: guides.filter((guide) => guide.data.category === category.id),
+}));
+
+const siteUrl = new URL("/", Astro.site ?? Astro.url.origin);
+const schema = {
+  "@type": "ItemList",
+  name: "Homeowner Resources",
+  itemListElement: guides.map((guide, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: guide.data.title,
+    url: new URL(guideUrl(guide.data.slug), siteUrl).href,
+  })),
+};
+---
+
+<BaseLayout
+  title="Homeowner Resources | Houston Remodeling Guides | OilerBilt"
+  description="Houston homeowner guides to bathroom and kitchen remodeling, water damage warning signs and home maintenance. Make smarter decisions about your home."
+  breadcrumbLabel="Homeowner Resources"
+  {schema}
+>
+  <div class="resources-hero">
+    <div class="wrap resources-hero__grid">
+      <div>
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> / Homeowner resources
+        </nav>
+        <p class="eyebrow">Homeowner education center</p>
+        <h1>Homeowner Resources</h1>
+        <p class="resources-hero__lede">
+          Guides, tips and expert advice to help Houston homeowners make smarter
+          decisions about their homes.
+        </p>
+        <p>
+          Warning signs to watch for, questions to ask before a remodel and the
+          Gulf Coast conditions that shape both, written by the team that opens
+          up the walls.
+        </p>
+        <div class="actions">
+          <a class="button" href="/free-estimate/">Start your project</a>
+          <a class="button secondary" href="/contact/">Talk with our team</a>
+        </div>
+      </div>
+      <figure class="resources-hero__media">
+        <ResourceImage
+          base="interior-floor-removal-houston-01"
+          alt="Interior hallway after old tile flooring was removed"
+          sizes="(max-width: 850px) 100vw, 45vw"
+          priority
+        />
+        <figcaption>
+          <strong>Real OilerBilt work</strong>
+          Old tile removed from an entry hall so the surface underneath can be checked.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <nav class="topic-strip" aria-label="Browse resources by project">
+      {sections.map((section, index) => (
+        <a href={`#${section.id}`}>
+          <span class="topic-strip__num">0{index + 1}</span>
+          <strong>{section.label}</strong>
+          <span>
+            {section.guides.length
+              ? `${section.guides.length} guide${section.guides.length > 1 ? "s" : ""} + ${section.planned.length} in progress`
+              : `${section.planned.length} guides in progress`}
+          </span>
+        </a>
+      ))}
+    </nav>
+  </div>
+
+  <section class="featured-resources">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Start here</p>
+          <h2>Featured homeowner guides</h2>
+        </div>
+        <p>
+          The questions Houston homeowners ask us most, answered before you pick
+          up the phone.
+        </p>
+      </div>
+      <div class="featured-grid">
+        {lead && (
+          <ResourceCard
+            variant="lead"
+            href={guideUrl(lead.data.slug)}
+            title={lead.data.title}
+            description={lead.data.description}
+            category={`${categoryById[lead.data.category].label} · Water damage`}
+            image={lead.data.image}
+            meta={minutes(lead.body)}
+          />
+        )}
+        {featuredPlanned.map((item) => (
+          <ResourceCard
+            planned
+            href={item.href}
+            title={item.title}
+            description={item.description}
+            category={item.category}
+            image={item.image}
+            cta={item.cta}
+            meta="Full guide coming soon"
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {sections.map((section, index) => (
+    <section id={section.id} class:list={["resource-category", { "resource-category--alt": index % 2 === 0 }]}>
+      <div class="wrap resource-category__grid">
+        <aside class="resource-category__intro">
+          <p class="eyebrow">0{index + 1} / {section.label}</p>
+          <h2>{section.heading}</h2>
+          <p>{section.intro}</p>
+          <p class="resource-category__label">Related services</p>
+          <ul class="resource-links">
+            {section.services.map((link) => (
+              <li><a href={link.href}>{link.label} →</a></li>
+            ))}
+          </ul>
+          <a class="button secondary" href="/contact/">Ask about your project</a>
+        </aside>
+        <div class="resource-category__content">
+          {section.guides.length > 0 && (
+            <div class="resource-grid">
+              {section.guides.map((guide) => (
+                <ResourceCard
+                  variant={section.guides.length === 1 ? "lead" : "default"}
+                  href={guideUrl(guide.data.slug)}
+                  title={guide.data.title}
+                  description={guide.data.description}
+                  category={section.label}
+                  image={guide.data.image}
+                  meta={minutes(guide.body)}
+                />
+              ))}
+            </div>
+          )}
+          {section.guides.length === 0 && section.image && (
+            <div class="resource-category__photo">
+              <ResourceImage
+                base={section.image.base}
+                alt={section.image.alt}
+                sizes="(max-width: 850px) 100vw, 60vw"
+              />
+            </div>
+          )}
+          <p class="resource-category__label">
+            {section.guides.length ? "More guides in progress" : "Guides in progress"}
+          </p>
+          <ul class="guide-list">
+            {section.planned.map((item) => (
+              <li>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+                <a href={item.link.href}>{item.link.label} →</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="dark-band">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Seen a warning sign?</p>
+          <h2>Here’s what happens next.</h2>
+        </div>
+        <p>
+          A guide can tell you what to look for. Deciding what to do about it
+          usually takes someone standing in the room.
+        </p>
+      </div>
+      <div class="process resource-steps">
+        <article>
+          <h3>Send a photo</h3>
+          <p>Tell us what you noticed and where. A phone photo is plenty to start.</p>
+        </article>
+        <article>
+          <h3>On-site review</h3>
+          <p>We look at the area and anything that may be hidden behind the finish.</p>
+        </article>
+        <article>
+          <h3>Clear options</h3>
+          <p>You get a practical recommendation: repair, remodel or keep an eye on it.</p>
+        </article>
+        <article>
+          <h3>No surprises</h3>
+          <p>Concealed conditions are shown and discussed before the work continues.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap cta-grid">
+      <div>
+        <p class="eyebrow" style="color:white">Next step</p>
+        <h2>Talk with our team.</h2>
+        <p>
+          Describe what you are seeing at home and add a photo if you have one.
+          We will follow up about the location, the likely scope and a time to
+          take a closer look.
+        </p>
+        <div class="actions">
+          <a class="button secondary resources-call" href="tel:+14692492563">
+            Call (469) 249-2563
+          </a>
+        </div>
+      </div>
+      <EstimateForm />
+    </div>
+  </section>
+</BaseLayout>
