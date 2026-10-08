@@ -230,10 +230,20 @@ const jsonLd = {
             <img class="brand-logo" src="/oilerbilt-logo.png" alt="OilerBilt Home Remodeling" width="580" height="300" />
           </picture>
         </a>
-        <nav aria-label="Primary navigation">
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+          aria-label="Open menu"
+        >
+          <span class="menu-toggle__bars" aria-hidden="true"></span>
+        </button>
+        <nav id="primary-nav" class="primary-nav" aria-label="Primary navigation">
           {nav.map(([label, href]) => (
             <a href={href}>{label}</a>
           ))}
+          <a class="primary-nav__call" href={phoneHref}>Call {phone}</a>
         </nav>
         <a class="header-call" href={phoneHref}>
           Call {phone}
@@ -290,5 +300,34 @@ const jsonLd = {
     <a class="mobile-call" href={phoneHref}>
       Call for a free estimate
     </a>
+    <script>
+      const header = document.querySelector(".site-header");
+      const toggle = header?.querySelector<HTMLButtonElement>(".menu-toggle");
+      const menu = header?.querySelector<HTMLElement>(".primary-nav");
+      if (header && toggle && menu) {
+        const setOpen = (open: boolean) => {
+          header.classList.toggle("menu-open", open);
+          toggle.setAttribute("aria-expanded", String(open));
+          toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        };
+        toggle.addEventListener("click", () =>
+          setOpen(!header.classList.contains("menu-open")),
+        );
+        // Close after choosing a link so same-page anchors like /#services
+        // don't leave the menu covering the section.
+        menu.addEventListener("click", (event) => {
+          if ((event.target as Element).closest("a")) setOpen(false);
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && header.classList.contains("menu-open")) {
+            setOpen(false);
+            toggle.focus();
+          }
+        });
+        matchMedia("(min-width: 851px)").addEventListener("change", (event) => {
+          if (event.matches) setOpen(false);
+        });
+      }
+    </script>
   </body>
 </html>
